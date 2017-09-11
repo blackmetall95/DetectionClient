@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Basic Settings">
+        <ListPreference
+            android:key="sensitivity"
+            android:title="@string/sensitivity_setting"
+            android:summary="@string/sensitivity_setting_details"
+            android:entries="@array/sensitivity_preference"
+            android:entryValues="@array/sensitivity_preference_values"
+            android:dialogTitle="@string/sensitivity_setting_title"
+            android:defaultValue="30" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

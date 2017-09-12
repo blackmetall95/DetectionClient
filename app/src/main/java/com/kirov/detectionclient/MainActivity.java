@@ -69,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
         buttonConnect = (Button) findViewById(R.id.button1);
         buttonClear = (Button) findViewById(R.id.button2);
         response = (TextView) findViewById(R.id.textView1);
-
-        //===============================================
-
-        //===============================================
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    /*=============== Client Class ===============*/
     private class Client2 extends AsyncTask<Void, Void, String>{
         boolean isConnected = false;
 
@@ -166,16 +163,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("[ASYNCTASK]:", "Connecting...");
                 socket = new Socket(address, portNum);
                 Log.d("[ASYNCTASK]:", "Connected!");
-                isConnected = true;
-                if (isConnected && stepValueStr!=null){
+                //isConnected = true;
+                if (stepValueStr!=null){
                     try{
-                        //Log.d("[MAIN]:", "Sending...");
+                        Log.d("[OUTPUT]:", "Sending...");
                         DataOutputStream DOS = new DataOutputStream(socket.getOutputStream());
                         DOS.writeUTF(stepValueStr);
-                        Log.d("[MAIN]:", stepValueStr);
+                        Log.d("[OUTPUT]:", stepValueStr);
                         socket.close();
                     } catch(IOException e){
-                        Log.d("[MAIN]:", "Error Sending Data");
+                        Log.d("[OUTPUT]:", "Error Sending Data");
                         e.printStackTrace();
                         socket.close();
                     }
@@ -187,51 +184,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    /*@Override
-    public void onSensorChanged(SensorEvent event) {
-        TextView tView1 = (TextView) findViewById(R.id.textView1);
-        TextView tView2 = (TextView) findViewById(R.id.textView2);
-        TextView tView3 = (TextView) findViewById(R.id.textView3);
-
-        if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
-        {
-            Toast.makeText(this, "Accelerometer not Available", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        float sensorX = 0, sensorY = 0, sensorZ = 0;
-        switch (mDisplay.getRotation()){
-            case Surface.ROTATION_0:
-                sensorX = event.values[0];
-                sensorY = event.values[1];
-                sensorZ = event.values[2];
-                break;
-            case Surface.ROTATION_90:
-                sensorX = event.values[0];
-                sensorY = event.values[1];
-                sensorZ = event.values[2];
-                break;
-            case Surface.ROTATION_180:
-                sensorX = event.values[0];
-                sensorY = event.values[1];
-                sensorZ = event.values[2];
-                break;
-            case Surface.ROTATION_270:
-                sensorX = event.values[0];
-                sensorY = event.values[1];
-                sensorZ = event.values[2];
-                break;
-        }
-        String mText1 = Float.toString(sensorX);
-        String mText2 = Float.toString(sensorY);
-        String mText3 = Float.toString(sensorZ);
-        tView1.setText("X= " + mText1);
-        tView2.setText("Y= " + mText2);
-        tView3.setText("Z= " + mText3);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }*/
+    /*============================================*/
 
     private StepService mService;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -289,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*Step Service*/
+    /*========== Step Service ==========*/
     private StepService.ICallback mCallback = new StepService.ICallback() {
         public void stepsChanged(int value) {
             handler.sendMessage(handler.obtainMessage(STEPS_MSG, value, 0));
